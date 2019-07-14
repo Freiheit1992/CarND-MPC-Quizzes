@@ -23,7 +23,7 @@ int main() {
   /**
    * TODO: fit a polynomial to the above x and y coordinates
    */
-  auto coeffs = ? ;
+  auto coeffs = polyfit(ptsx, ptsy, 1) ;
 
   // NOTE: free feel to play around with these
   double x = -1;
@@ -33,11 +33,11 @@ int main() {
   /**
    * TODO: calculate the cross track error
    */
-  double cte = ? ;
+  double cte = polyeval(coeffs, x) - y;
   /**
    * TODO: calculate the orientation error
    */
-  double epsi = ? ;
+  double epsi = psi - atan(polygradeval(coeffs, x));
 
   VectorXd state(6);
   state << x, y, psi, v, cte, epsi;
@@ -63,7 +63,7 @@ int main() {
     cte_vals.push_back(vars[4]);
     epsi_vals.push_back(vars[5]);
 
-    delta_vals.push_back(vars[6]);
+    delta_vals.push_back(vars[6]*180/M_PI);
     a_vals.push_back(vars[7]);
 
     state << vars[0], vars[1], vars[2], vars[3], vars[4], vars[5];
@@ -85,7 +85,7 @@ int main() {
   plt::title("CTE");
   plt::plot(cte_vals);
   plt::subplot(3, 1, 2);
-  plt::title("Delta (Radians)");
+  plt::title("Delta (Degrees)");
   plt::plot(delta_vals);
   plt::subplot(3, 1, 3);
   plt::title("Velocity");

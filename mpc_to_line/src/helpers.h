@@ -18,6 +18,14 @@ double polyeval(const VectorXd &coeffs, double x) {
   return result;
 }
 
+double polygradeval(const VectorXd &coeffs, double x) {
+  double grad = 0.0;
+  for (int i = 1; i < coeffs.size(); ++i) {
+    grad += coeffs[i] * i * pow(x, i-1);
+  }
+  return grad;
+}
+
 // Fit a polynomial.
 // Adapted from:
 // https://github.com/JuliaMath/Polynomials.jl/blob/master/src/Polynomials.jl#L676-L716
